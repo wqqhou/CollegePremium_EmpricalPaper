@@ -1,0 +1,65 @@
+{
+  "stage": "01_clean_panel",
+  "inputs": {
+    "raw_data": {
+      "path": "/Users/matt/Desktop/E4331_ER/data/raw/nlsy97.csv",
+      "sha256": "abde440c99c21cfc81ee077056fbd37972db95bb113d05c587038ecade16e0c7"
+    },
+    "weights": {
+      "path": "/Users/matt/Desktop/E4331_ER/data/raw/custom_weights.dat",
+      "sha256": "d2eee0357f3affe8853cb16f32fee756eaf2bc4023af75828a2f77db80959a69"
+    }
+  },
+  "script_sha256": "9964cba7fb526ef703ef64a329566de76548cd30c879d86a3ec871f4b4d2be59",
+  "missing_codes": {
+    "-1": "Refusal",
+    "-2": "Do not know",
+    "-3": "Invalid skip",
+    "-4": "Valid skip",
+    "-5": "Non-interview"
+  },
+  "selection": "All required background measures and covariates, and all three earnings amounts, observed; exact custom-weight ID match.",
+  "valid_skip_policy": "The current sample excludes earnings valid skips. The amount question can be skipped when a respondent has no wage income, but the extract lacks YINC-1400/YINC-1600 receipt screens needed to distinguish confirmed zero income from unresolved answers. Do not recode every skip to zero. Changing the selected people also requires matching custom weights.",
+  "reported_zero_earnings_retained": true,
+  "other_negative_background_amounts_retained": true,
+  "earnings_mapping": {
+    "2016": {
+      "source": "U2857200",
+      "survey_year": 2017
+    },
+    "2018": {
+      "source": "U4282300",
+      "survey_year": 2019
+    },
+    "2020": {
+      "source": "U5753500",
+      "survey_year": 2021
+    }
+  },
+  "counts": {
+    "raw_respondents": 8984,
+    "background_observed": 5833,
+    "covariate_complete": 3915,
+    "selected_respondents": 2123,
+    "person_years": 6369,
+    "covariate_complete_with_earnings_valid_skip": 987
+  },
+  "output": {
+    "path": "/Users/matt/Desktop/E4331_ER/data/processed/clean_panel.csv",
+    "sha256": "11a7efbc00d25d242b95f17044d5ebfaf5b5eb0aae4d227d1dba6f6ae5a9b4f6",
+    "columns": [
+      "id",
+      "birth_year",
+      "sex",
+      "race_ethnicity",
+      "asvab_stored",
+      "highest_degree_2015",
+      "household_income_1996_nominal",
+      "household_net_worth_1997_nominal",
+      "custom_weight_raw",
+      "year",
+      "survey_year",
+      "wage_nominal"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+survey_year,earnings_year,question_name,verified_reference_id,purpose,status,questionnaire
+2017,2016,YINC-1400,,Initial receipt of wage/salary/commission/tip income,Missing from current extract; request by question name and survey year,https://www.nlsinfo.org/sites/default/files/attachments/18109/8.Income.html
+2017,2016,YINC-1600,,Fallback receipt screen after uncertain/refused initial answer; also mentions self-employment,Missing from current extract; request by question name and survey year,https://www.nlsinfo.org/sites/default/files/attachments/18109/8.Income.html
+2019,2018,YINC-1400,U42821.00,Initial receipt of wage/salary/commission/tip income,Missing from current extract; request by question name and survey year,https://www.nlsinfo.org/sites/default/files/attachments/21113/8.Income.html
+2019,2018,YINC-1600,U42822.00,Fallback receipt screen after uncertain/refused initial answer; also mentions self-employment,Missing from current extract; request by question name and survey year,https://www.nlsinfo.org/sites/default/files/attachments/21113/8.Income.html
+2021,2020,YINC-1400,,Initial receipt of wage/salary/commission/tip income,Missing from current extract; request by question name and survey year,https://www.nlsinfo.org/sites/default/files/attachments/230112/8.Income.html
+2021,2020,YINC-1600,,Fallback receipt screen after uncertain/refused initial answer; also mentions self-employment,Missing from current extract; request by question name and survey year,https://www.nlsinfo.org/sites/default/files/attachments/230112/8.Income.html

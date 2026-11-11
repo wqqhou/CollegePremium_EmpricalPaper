@@ -1,0 +1,9 @@
+file,status,rows
+results_60/regression_coefficients.csv,matches archived output,12
+results_60/college_premia.csv,matches archived output,3
+results_60/sample_flow.csv,matches archived output,5
+results_60/model_summary.csv,matches archived output,1
+results_60/background_thresholds.csv,matches archived output,2
+results_60/completion_by_background.csv,matches archived output,2
+results_60/cpi_conversion.csv,matches archived output,6
+data/balanced_panel_60.csv,matches archived output,6369
