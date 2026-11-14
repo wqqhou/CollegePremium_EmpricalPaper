@@ -9,6 +9,7 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{booktabs,array}
+\usepackage{float}
 \usepackage{placeins}
 \usepackage{titlesec}
 \usepackage[hidelinks]{hyperref}
@@ -43,12 +44,11 @@
 \raggedright
 
 \section*{INTRODUCTION}
-My empirical question is: ``Does a bachelor's degree carry a larger earnings premium for students 
-from lower-income families?'' I examine whether the substitution effect or the complementarity 
-effect dominates the relationship between family background and higher education, thereby explaining
-part of the difference in the college earnings premium across family backgrounds. 
-This question helps inform a broader debate about whether our higher education system 
-has helped or hindered intergenerational mobility. \newline
+My empirical question is: ``Is the adjusted annual earnings premium associated with
+a bachelor's degree, relative to a high-school diploma, larger for respondents
+from lower-income families?'' This comparison describes how education-related
+earnings differences vary by family income and is relevant to debates about higher
+education and intergenerational mobility. \newline
 
 Using data from the National Longitudinal Survey of Youth 1997, this paper examines differences
 in the college earnings premium by family background, controlling for adolescent academic
@@ -60,7 +60,9 @@ from the graduate/professional premium, using high-school diploma holders as the
 The descriptive statistics show that a smaller share of the lower-income group completed
 a bachelor's degree or higher by 2015. The preliminary empirical results show that the 
 adjusted bachelor's premium is smaller for respondents from lower-income families, a pattern 
-consistent with complementarity between family resources and higher education.\newline
+consistent with complementarity between family resources and higher education.
+These regression estimates describe conditional associations and do not establish
+causal complementarity, substitution, or effects on intergenerational mobility.\newline
 
 Further research on expected earnings, college costs, financing constraints, 
 and enrollment and completion decisions could help explain these patterns and guide a 
@@ -287,9 +289,10 @@ Figure~\ref{fig:education-premia} illustrates these comparisons. Panel A shows
 positive bachelor's premiums for both income groups, while the bachelor's
 premium difference has a confidence interval entirely below zero in Panel B.
 The wide graduate/professional interval shows the limited precision of that
-comparison.
+comparison. Table~\ref{tab:robustness-checks} in the appendix reports two
+robustness checks.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
 \centering
 \singlespacing
 \captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=false}
@@ -346,4 +349,34 @@ from differences in time worked.
 \item U.S. Bureau of Labor Statistics. n.d.-b. ``Appendix 10: CAT-ASVAB Scores.'' \textit{National Longitudinal Surveys, NLSY97 Codebook Supplement}. \href{https://nlsinfo.org/content/cohorts/nlsy97/other-documentation/codebook-supplement/appendix-10-cat-asvab-scores}{Official documentation}. Accessed November 13, 2026.
 \item U.S. Bureau of Labor Statistics. n.d.-c. ``Income.'' \textit{National Longitudinal Surveys, NLSY97 Topical Guide}. \href{https://nlsinfo.org/content/cohorts/nlsy97/topical-guide/income/income}{Official documentation}. See also YINC-1700 entries for the 2017, 2019, and 2021 surveys in the downloaded NLSY97 codebook. Accessed November 13, 2026.
 \end{list}
+
+\clearpage
+\appendix
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\renewcommand{\theHtable}{A\arabic{table}}
+\section*{APPENDIX: ROBUSTNESS CHECKS}
+
+Table~\ref{tab:robustness-checks} compares the main specification with two
+exploratory checks. Each changes one feature while retaining the same 3,171
+respondents, official person weights, education categories, and control variables.\newline
+
+\textbf{Excluding 2020.} I use only 2016 and 2018 earnings to assess whether the
+result depends on including 2020. The original three-year sample eligibility is
+retained, so this check addresses the earnings periods used in estimation rather
+than selection from requiring a usable 2020 response.\newline
+
+\textbf{Alternative income cutoff.} I replace the weighted bottom quintile with
+the bottom quartile. The resulting cutoff is \$26,000 in nominal 1996 dollars.
+This changes the income-group definition while keeping the earnings years and
+selected respondents fixed.
+
+\IfFileExists{tables/robustness_checks.tex}{\input{tables/robustness_checks.tex}}{\input{reports/tables/robustness_checks.tex}}
+
+The BA premium difference remains negative in both checks. With the
+25th-percentile cutoff, the gap falls to \$12,994 and its 95\% confidence interval
+nearly reaches zero. The joint test of the four interactions also no longer
+rejects at the 5\% level. Thus the direction of the BA association persists,
+while its magnitude and the strength of the evidence depend on the income
+definition. These checks do not resolve unobserved selection into degree completion.
 \end{document}

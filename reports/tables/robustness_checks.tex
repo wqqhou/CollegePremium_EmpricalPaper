@@ -1,0 +1,44 @@
+% Snapshot of the main estimate and two exploratory robustness checks.
+% outputs/regression/education_premia.csv SHA256: 43894ebbf0dc1db33b118281b8a668ea4dbd15839d9ae77de457fb1c2bffb7e9
+% outputs/sensitivity/exclude_2020/regression/education_premia.csv SHA256: e11fad8d10e829941d6697a1b09de52b9d15caffef04702236af6b363c8a55a2
+% outputs/sensitivity/income_p25/regression/education_premia.csv SHA256: d4dc211e7002ff57001e34acb60dd778cafde0d0562cbd715b4071e82c8a1dad
+\begin{table}[H]
+\centering
+\singlespacing
+\small
+\captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=false}
+\caption{Robustness of the bachelor's-only earnings premium}
+\label{tab:robustness-checks}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}p{0.40\linewidth}*{3}{>{\centering\arraybackslash}p{0.18\linewidth}}@{}}
+\toprule
+ & Main & Exclude 2020 & 25th percentile \\
+\midrule
+BA premium: above cutoff & \shortstack{$32{,}309^{***}$\\$(3{,}507)$} & \shortstack{$32{,}523^{***}$\\$(3{,}395)$} & \shortstack{$32{,}437^{***}$\\$(3{,}609)$} \\[2pt]
+BA premium: lower income & \shortstack{$14{,}001^{**}$\\$(5{,}788)$} & \shortstack{$11{,}165^{**}$\\$(5{,}494)$} & \shortstack{$19{,}443^{***}$\\$(5{,}719)$} \\[2pt]
+Difference: lower minus above & \shortstack{$-18{,}308^{***}$\\$(6{,}618)$} & \shortstack{$-21{,}358^{***}$\\$(6{,}315)$} & \shortstack{$-12{,}994^{**}$\\$(6{,}560)$} \\[2pt]
+95\% CI for the difference & \shortstack{$[-31{,}285,$\\$-5{,}332]$} & \shortstack{$[-33{,}739,$\\$-8{,}976]$} & \shortstack{$[-25{,}856,$\\$-131]$} \\
+$p$-value for the difference & 0.0057 & 0.0007 & 0.0477 \\
+Joint interaction test: $p$-value & 0.0385 & 0.0071 & 0.1857 \\
+\midrule
+Earnings years & 2016, 2018, 2020 & 2016, 2018 & 2016, 2018, 2020 \\
+Lower-income percentile & 20th & 20th & 25th \\
+Income cutoff (1996 dollars) & \$21,613 & \$21,613 & \$26,000 \\
+Respondents & 3,171 & 3,171 & 3,171 \\
+Lower-income respondents & 837 & 837 & 1,004 \\
+Person-year observations & 9,513 & 6,342 & 9,513 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}
+\footnotesize\singlespacing
+\textit{Notes:} Weighted pooled OLS premiums relative to high-school diploma
+holders within each income group, in 2025 US dollars. All columns retain the same
+respondents, custom weights, education categories, and controls; year effects
+correspond to the included years. Respondent-clustered standard errors appear in
+parentheses; intervals are pointwise 95\% confidence intervals. The joint test
+restricts all four education-by-background interactions to zero. Stars indicate
+two-sided, unadjusted significance: $^{*}p<0.10$, $^{**}p<0.05$, $^{***}p<0.01$.
+\end{minipage}
+\end{table}

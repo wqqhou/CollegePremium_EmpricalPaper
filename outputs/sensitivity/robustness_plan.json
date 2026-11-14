@@ -1,0 +1,55 @@
+{
+  "created_at_utc": "2026-11-14T04:12:25.710456+00:00",
+  "purpose": "Two exploratory robustness checks selected before estimating their results; not preregistration.",
+  "baseline": {
+    "respondents": 3171,
+    "earnings_years": [
+      2016,
+      2018,
+      2020
+    ],
+    "income_percentile": 0.2,
+    "income_cutoff_nominal_1996": 21613
+  },
+  "checks": [
+    {
+      "name": "exclude_2020",
+      "earnings_years": [
+        2016,
+        2018
+      ],
+      "income_percentile": 0.2,
+      "selection": "Use the same 3171 respondents and original custom weights; retain original three-year sample eligibility; omit only 2020 outcome rows."
+    },
+    {
+      "name": "income_p25",
+      "earnings_years": [
+        2016,
+        2018,
+        2020
+      ],
+      "income_percentile": 0.25,
+      "selection": "Use same people, weights, outcomes, education categories and controls; recompute lower-income indicator at weighted25th percentile with ties included."
+    }
+  ],
+  "protected_baseline_sha256": {
+    "data/processed/analysis_panel.csv": "e1832590e1f7343920a575afc5e03e8b71cc229244369c913f30ad3b42e377a4",
+    "data/processed/clean_panel.csv": "1f12b091fe674a22d6dbeb285be536d3b608bc84e6b376708397af5b6af9ce61",
+    "data/processed/variable_metadata.json": "15c5ee9bff29ee308bd65957249fe67e2dfc654cc6561842a3b07acb4fc32a39",
+    "data/processed/cleaning_metadata.json": "d3b7f0b006859a538e9f40e0dcc9b7eada055e5a92dd9323d1466f73b2e426ba",
+    "data/raw/custom_weights.dat": "e4ac5d605d461031f386b52242f00d1c983976167978ed01f16f1f706aa5ecfd",
+    "outputs/regression/cluster_covariance.csv": "ba19aa45cb8575770eb02920e98b0b094f5a94fe84a1faae51a78e6257ac77eb",
+    "outputs/regression/completion_by_background.csv": "1fecf291ee8bf89fd2ed63234151ce1effe8e1bf408831b6ef6150539714db28",
+    "outputs/regression/education_by_background.csv": "3296094393fcc2afae8485dee264630c01256a7e2d49d4de48e0d635cef65769",
+    "outputs/regression/education_premia.csv": "43894ebbf0dc1db33b118281b8a668ea4dbd15839d9ae77de457fb1c2bffb7e9",
+    "outputs/regression/joint_interaction_test.csv": "f244052f8767063f0d088cd7e760548a517b3ebd635fff2c37d8e973bdda8ec4",
+    "outputs/regression/model_summary.csv": "572b13ed99cc69df2d6471cb6586863716222a1de8b4a3ec214933fbc97c1e23",
+    "outputs/regression/regression_coefficients.csv": "4972c3cda28e7be8bd896ca1c79ed23d4c39160b3a0692279b49c9fdcfef0f64",
+    "outputs/regression/regression_metadata.json": "606427155505dec634c6d120675d4ffa430045b11bf24479f6e6e371004aa829",
+    "reports/figures/education_premia.pdf": "129711a409a386a8d33d1754da2b6a7038d75eed896b1f20004b4a4a10dfac54",
+    "reports/figures/education_premia.png": "059d097af5d88c7710771c93618a98655c9f4b078834a25f6c555b90bd15f0c7",
+    "reports/figures/education_premia_figure_metadata.json": "6a948722af15aad05018367cfb704962fa32765579ba0993d474f2f033a185ab",
+    "reports/tables/summary_statistics_current.tex": "9e1ec46d874971074b771254e048dc8163cc31594eb5a78fed28488daae4c944",
+    "reports/tables/education_premia.tex": "82d72747ecb67ca18e898e3c6eb84d65f97ea35a30f2eea205b05e34323df89f"
+  }
+}

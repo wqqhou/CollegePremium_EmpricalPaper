@@ -6,6 +6,8 @@ are generated. Sampling weights and respondent-clustered CR1 standard errors
 match the previous R analysis. The default uses five education categories,
 with high-school diploma as the reference. Use --education-model binary to
 replicate the archived BA+ versus no-BA specification.
+Use --earnings-years 2016 2018 to omit 2020 while retaining the selected
+respondents, their official weights, and their constructed baseline variables.
 """
 
 import argparse
@@ -97,6 +99,28 @@ def read_panel(path, metadata_path, education_model="categorical"):
     if len(people.groupby(["low_background", degree_variable])) != expected_cells:
         raise ValueError(f"All {expected_cells} background-by-education groups are needed for the interaction.")
     return panel.sort_values(["id", "year"]).reset_index(drop=True), metadata
+
+
+def select_earnings_years(panel, requested_years=None):
+    """Restrict earnings periods after validating the entire source panel.
+
+    This does not redefine eligibility or recalculate person weights: the source
+    panel's selected respondents remain the analysis population.
+    """
+    available = sorted(map(int, panel.year.unique()))
+    selected = available if requested_years is None else list(requested_years)
+    if not selected or len(selected) != len(set(selected)):
+        raise ValueError("Requested earnings years must be nonempty and distinct.")
+    unavailable = sorted(set(selected) - set(available))
+    if unavailable:
+        raise ValueError(f"Requested earnings years {unavailable} are not available in the input panel {available}.")
+    selected = sorted(selected)
+    restricted = panel.loc[panel.year.isin(selected)].copy().reset_index(drop=True)
+    if set(restricted.id) != set(panel.id):
+        raise ValueError("Year selection must retain every respondent in the source panel.")
+    if not restricted.groupby("id").size().eq(len(selected)).all():
+        raise ValueError("Selected earnings years must form a balanced panel for the original respondents.")
+    return restricted
 
 
 def design_matrix(panel, education_model="categorical"):
@@ -246,9 +270,16 @@ def main():
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/regression")
     parser.add_argument("--education-model", choices=["categorical", "binary"], default="categorical",
                         help="Default: five education categories, high-school diploma reference. Binary reproduces the archived BA+ model.")
+    parser.add_argument("--earnings-years", type=int, nargs="+",
+                        help="Optional subset of available earnings years, e.g. 2016 2018. Retains the source panel's people, weights, and baseline variables.")
     args = parser.parse_args()
     metadata_path = args.metadata or args.input.parent / "variable_metadata.json"
     panel, variable_metadata = read_panel(args.input, metadata_path, args.education_model)
+    source_years = sorted(map(int, panel.year.unique()))
+    source_observations = len(panel)
+    source_respondents = int(panel.id.nunique())
+    panel = select_earnings_years(panel, args.earnings_years)
+    selected_years = sorted(map(int, panel.year.unique()))
     coefficients, covariance, premia, summary = estimate(panel, args.education_model)
     people = panel.drop_duplicates("id")
     total_weight = people.regression_weight.sum()
@@ -282,7 +313,20 @@ def main():
     metadata = {
         "input": {"path": str(args.input.resolve()), "sha256": sha256(args.input)},
         "variable_metadata": {"path": str(metadata_path.resolve()), "sha256": sha256(metadata_path)},
-        "configuration": {**variable_metadata.get("configuration", {}), "education_model": args.education_model},
+        "configuration": {**variable_metadata.get("configuration", {}),
+                          "education_model": args.education_model,
+                          "source_earnings_years": source_years,
+                          "earnings_years": selected_years},
+        "year_selection": {
+            "source_earnings_years": source_years,
+            "selected_earnings_years": selected_years,
+            "omitted_earnings_years": sorted(set(source_years) - set(selected_years)),
+            "source_observations": source_observations,
+            "source_respondents": source_respondents,
+            "respondent_selection_unchanged": True,
+            "weights_and_baseline_variables_unchanged": True,
+            "rule": "Validate the complete source panel, then retain only the selected earnings years. Eligibility remains based on the source panel; no new respondents or weights are introduced.",
+        },
         "background_definition": variable_metadata.get("background_definition", {}),
         "education_definition": {
             "source": "Highest degree earned by the 2015 interview",
@@ -317,6 +361,8 @@ def main():
     }
     (args.output_dir / "regression_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
     print(f"Estimated weighted pooled OLS: {summary['respondents']:,} respondents, {summary['observations']:,} person-years.")
+    if selected_years != source_years:
+        print(f"Earnings years: {selected_years}; all {source_respondents:,} source-panel respondents and their weights retained.")
     if args.education_model == "categorical":
         bachelor = premia.loc[premia.education.eq("bachelor")]
         print(f"BA-only versus high-school premium: other backgrounds ${bachelor.iloc[0].estimate:,.2f}; "

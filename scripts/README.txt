@@ -198,6 +198,27 @@ zero-earnings shares, and age use person-years; baseline measures count each
 respondent once. Monetary figures are in thousands of 2025 dollars. The older
 summary_statistics.tex belongs to the previous empirical_summary report.
 
+APPENDIX ROBUSTNESS CHECKS
+
+The appendix compares the main estimate with two exploratory checks chosen
+before estimating their results: omit 2020 earnings, and use the weighted
+25th-percentile income cutoff. Each retains the same 3,171 people and official
+weights. The first retains the original three-year sample eligibility and
+omits only 2020 outcome rows; it does not reconstruct a larger two-year sample.
+The second uses all three years and changes only the lower-income indicator.
+
+    .venv/bin/python scripts/03_run_regression.py --earnings-years 2016 2018 --output-dir outputs/sensitivity/exclude_2020/regression
+    .venv/bin/python scripts/02_construct_variables.py --background-percentile 0.25 --output-dir outputs/sensitivity/income_p25/processed --diagnostics-dir outputs/sensitivity/income_p25/diagnostics
+    .venv/bin/python scripts/03_run_regression.py --input outputs/sensitivity/income_p25/processed/analysis_panel.csv --output-dir outputs/sensitivity/income_p25/regression
+
+Stage 3 validates the complete source panel before applying --earnings-years.
+Its metadata records the source and estimation years and unchanged respondent
+selection. The main output directories are not overwritten by these commands.
+reports/tables/robustness_checks.tex is the presentation snapshot used by the
+appendix; refresh it and the prose after changing either check. The analysis
+plan and independent numerical audit are in outputs/sensitivity/robustness_plan.json
+and outputs/sensitivity/robustness_independent_audit.json.
+
 RESULTS FIGURE (SUPPLEMENTARY PRESENTATION STEP)
 
     .venv/bin/python scripts/plot_education_premia.py
