@@ -1,0 +1,63 @@
+population,earnings_year,wage_source,count
+Original extract,2016,confirmed_zero_fallback_screen,11
+Original extract,2016,confirmed_zero_initial_screen,1173
+Original extract,2016,missing_do_not_know,362
+Original extract,2016,missing_invalid_skip,2
+Original extract,2016,missing_non-interview,2250
+Original extract,2016,missing_refusal,68
+Original extract,2016,missing_valid_skip,27
+Original extract,2016,reported_positive,5060
+Original extract,2016,reported_zero,31
+Original extract,2018,confirmed_zero_fallback_screen,17
+Original extract,2018,confirmed_zero_initial_screen,1156
+Original extract,2018,missing_do_not_know,269
+Original extract,2018,missing_non-interview,2037
+Original extract,2018,missing_refusal,66
+Original extract,2018,missing_valid_skip,27
+Original extract,2018,reported_positive,5376
+Original extract,2018,reported_zero,36
+Original extract,2020,confirmed_zero_fallback_screen,18
+Original extract,2020,confirmed_zero_initial_screen,1162
+Original extract,2020,missing_do_not_know,224
+Original extract,2020,missing_non-interview,2271
+Original extract,2020,missing_refusal,75
+Original extract,2020,missing_valid_skip,33
+Original extract,2020,reported_positive,5170
+Original extract,2020,reported_zero,31
+Covariate-complete,2016,confirmed_zero_fallback_screen,1
+Covariate-complete,2016,confirmed_zero_initial_screen,583
+Covariate-complete,2016,missing_do_not_know,176
+Covariate-complete,2016,missing_invalid_skip,1
+Covariate-complete,2016,missing_non-interview,371
+Covariate-complete,2016,missing_refusal,25
+Covariate-complete,2016,missing_valid_skip,7
+Covariate-complete,2016,reported_positive,2740
+Covariate-complete,2016,reported_zero,11
+Covariate-complete,2018,confirmed_zero_fallback_screen,7
+Covariate-complete,2018,confirmed_zero_initial_screen,568
+Covariate-complete,2018,missing_do_not_know,108
+Covariate-complete,2018,missing_non-interview,360
+Covariate-complete,2018,missing_refusal,21
+Covariate-complete,2018,missing_valid_skip,7
+Covariate-complete,2018,reported_positive,2826
+Covariate-complete,2018,reported_zero,18
+Covariate-complete,2020,confirmed_zero_fallback_screen,6
+Covariate-complete,2020,confirmed_zero_initial_screen,561
+Covariate-complete,2020,missing_do_not_know,107
+Covariate-complete,2020,missing_non-interview,451
+Covariate-complete,2020,missing_refusal,20
+Covariate-complete,2020,missing_valid_skip,11
+Covariate-complete,2020,reported_positive,2745
+Covariate-complete,2020,reported_zero,14
+Selected balanced panel,2016,confirmed_zero_fallback_screen,1
+Selected balanced panel,2016,confirmed_zero_initial_screen,475
+Selected balanced panel,2016,reported_positive,2363
+Selected balanced panel,2016,reported_zero,10
+Selected balanced panel,2018,confirmed_zero_fallback_screen,3
+Selected balanced panel,2018,confirmed_zero_initial_screen,460
+Selected balanced panel,2018,reported_positive,2374
+Selected balanced panel,2018,reported_zero,12
+Selected balanced panel,2020,confirmed_zero_fallback_screen,6
+Selected balanced panel,2020,confirmed_zero_initial_screen,457
+Selected balanced panel,2020,reported_positive,2373
+Selected balanced panel,2020,reported_zero,13

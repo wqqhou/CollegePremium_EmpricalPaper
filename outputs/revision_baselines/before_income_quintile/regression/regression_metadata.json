@@ -1,0 +1,77 @@
+{
+  "input": {
+    "path": "/Users/matt/Desktop/E4331_ER/data/processed/analysis_panel.csv",
+    "sha256": "de1e7ee7f3339cc8d42ce5a85ff16fe58020275378c003c60f088cf62780a98e"
+  },
+  "variable_metadata": {
+    "path": "/Users/matt/Desktop/E4331_ER/data/processed/variable_metadata.json",
+    "sha256": "e5924c9e9a00af1a1d528d04b8b68556ed466fd20066190dfd9f8fd883d27efe"
+  },
+  "configuration": {
+    "background_percentile": 0.6,
+    "base_dollar_year": 2025,
+    "earnings_years": [
+      2016,
+      2018,
+      2020
+    ]
+  },
+  "background_definition": {
+    "income_cutoff_1996_nominal": 55000.0,
+    "net_worth_cutoff_1997_nominal": 101000.0,
+    "rule": "Both nominal baseline measures strictly below separate weighted cutoffs",
+    "reference_population": "Selected panel, each respondent counted once",
+    "weighted_lower_background_share": 0.4800383931369944
+  },
+  "formula": "wage_2025 ~ college * low_background + asvab_percentile + female + age + race + factor(year)",
+  "reference_categories": {
+    "college": 0,
+    "low_background": 0,
+    "female": 0,
+    "race_ethnicity": 4,
+    "year": 2016
+  },
+  "estimation": "Weighted pooled OLS; same respondent sampling weight in every earnings year",
+  "covariance": "Respondent-clustered sandwich with weighted scores and CR1 factor G/(G-1)*(N-1)/(N-K)",
+  "inference": "Two-sided Student-t tests and 95% pointwise confidence intervals with G-1 degrees of freedom",
+  "sample": {
+    "observations": 6369,
+    "respondents": 2123,
+    "periods": 3,
+    "parameters": 12,
+    "weighting": "custom sampling weights normalized to mean 1",
+    "r_squared": 0.17803996961303636,
+    "adjusted_r_squared": 0.17661766973349302,
+    "cluster_df": 2122
+  },
+  "limitations": [
+    "Associations, not a causal difference-in-differences design.",
+    "Valid-skip earnings amounts remain excluded pending receipt-filter verification.",
+    "The inherited 60th-percentile background definition was selected after exploratory comparisons.",
+    "Inference does not adjust for cutoff selection, estimated-cutoff uncertainty, or the full survey design.",
+    "BA+ is degree status at the 2015 interview, not college attendance or updated degree status."
+  ],
+  "software": {
+    "python": "3.11.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "scipy": "1.17.1"
+  },
+  "outputs": {
+    "regression_coefficients.csv": {
+      "sha256": "6b39d2877ac7e25a4ea8c8cd70d73327567c5239fba4ed5032f0d706869d8221"
+    },
+    "college_premia.csv": {
+      "sha256": "b7a439f8e91a64db4d252815d6f384e831eb6811d158c5e3dadccd24dc83da45"
+    },
+    "model_summary.csv": {
+      "sha256": "19cd39e704c46d8670104261725a04043168231c66178ef1cd1768e4032e3414"
+    },
+    "completion_by_background.csv": {
+      "sha256": "10e7c1f78265c9c312d7b818666874aa63dd6a3a27b10bdbcb054da915afe304"
+    },
+    "cluster_covariance.csv": {
+      "sha256": "abd29280a912e2be5e7327801421b42228815210faa9b1f18aecfcc8af89d71a"
+    }
+  }
+}

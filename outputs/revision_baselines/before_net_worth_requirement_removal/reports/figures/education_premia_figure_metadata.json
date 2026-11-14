@@ -1,0 +1,144 @@
+{
+  "title": "Adjusted education earnings premiums by family income",
+  "source": {
+    "path": "/Users/matt/Desktop/E4331_ER/outputs/regression/education_premia.csv",
+    "sha256": "b34df557db66e883b1579addd5f4097d701f8178a7478a5e5e819e70fe3587d7"
+  },
+  "regression_metadata": {
+    "path": "/Users/matt/Desktop/E4331_ER/outputs/regression/regression_metadata.json",
+    "sha256": "ea17c8e75279cf23947044ffd86ae91f675d854549d086d7b59e9ae5aff2ccdc"
+  },
+  "script": {
+    "path": "/Users/matt/Desktop/E4331_ER/scripts/plot_education_premia.py",
+    "sha256": "6a9941524eac5d59846ef3d42be4a15ab3070777ec36b35d569060729ecb095a"
+  },
+  "units": "Thousands of 2025 US dollars",
+  "intervals": "Saved pointwise 95% Student-t intervals from respondent-clustered CR1 covariance; no recomputation or independent-coefficient approximation",
+  "sample": {
+    "observations": 8547,
+    "respondents": 2849,
+    "periods": 3,
+    "parameters": 18,
+    "weighting": "custom sampling weights normalized to mean 1",
+    "r_squared": 0.22599051730308806,
+    "adjusted_r_squared": 0.22444776185627746,
+    "cluster_df": 2848
+  },
+  "plotted_points": [
+    {
+      "panel": "A",
+      "education": "no_diploma_or_ged",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate_thousands": -8.495031781463258,
+      "ci_low_thousands": -14.257450557185606,
+      "ci_high_thousands": -2.73261300574091
+    },
+    {
+      "panel": "A",
+      "education": "associate",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate_thousands": 16.15383350970099,
+      "ci_low_thousands": 5.5113640639264,
+      "ci_high_thousands": 26.796302955475586
+    },
+    {
+      "panel": "A",
+      "education": "bachelor",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate_thousands": 31.135808091796136,
+      "ci_low_thousands": 23.646767698502885,
+      "ci_high_thousands": 38.62484848508939
+    },
+    {
+      "panel": "A",
+      "education": "graduate",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate_thousands": 62.97960689056525,
+      "ci_low_thousands": 51.44268483748352,
+      "ci_high_thousands": 74.51652894364697
+    },
+    {
+      "panel": "A",
+      "education": "no_diploma_or_ged",
+      "contrast": "Lower background (L=1)",
+      "estimate_thousands": -11.297873682438608,
+      "ci_low_thousands": -19.586587963714937,
+      "ci_high_thousands": -3.00915940116228
+    },
+    {
+      "panel": "A",
+      "education": "associate",
+      "contrast": "Lower background (L=1)",
+      "estimate_thousands": 8.53555453770727,
+      "ci_low_thousands": -2.5823915678134908,
+      "ci_high_thousands": 19.653500643228032
+    },
+    {
+      "panel": "A",
+      "education": "bachelor",
+      "contrast": "Lower background (L=1)",
+      "estimate_thousands": 12.859533593085853,
+      "ci_low_thousands": 1.283015203332543,
+      "ci_high_thousands": 24.436051982839164
+    },
+    {
+      "panel": "A",
+      "education": "graduate",
+      "contrast": "Lower background (L=1)",
+      "estimate_thousands": 65.3898474791322,
+      "ci_low_thousands": 25.446685753969998,
+      "ci_high_thousands": 105.3330092042944
+    },
+    {
+      "panel": "B",
+      "education": "no_diploma_or_ged",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate_thousands": -2.8028419009753502,
+      "ci_low_thousands": -12.817479574350749,
+      "ci_high_thousands": 7.211795772400048
+    },
+    {
+      "panel": "B",
+      "education": "associate",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate_thousands": -7.618278971993723,
+      "ci_low_thousands": -22.984563064837836,
+      "ci_high_thousands": 7.748005120850388
+    },
+    {
+      "panel": "B",
+      "education": "bachelor",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate_thousands": -18.276274498710283,
+      "ci_low_thousands": -31.664040654240008,
+      "ci_high_thousands": -4.888508343180554
+    },
+    {
+      "panel": "B",
+      "education": "graduate",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate_thousands": 2.4102405885669507,
+      "ci_low_thousands": -38.85412471149553,
+      "ci_high_thousands": 43.674605888629436
+    }
+  ],
+  "axis_limits": {
+    "A": [
+      -27.081763793795496,
+      112.82818503437495
+    ],
+    "B": [
+      -43.805848547503025,
+      48.62632972463693
+    ]
+  },
+  "outputs": {
+    "education_premia.pdf": {
+      "sha256": "e7255627b63f8d0869c7b38e29e5ec2851ae41fb79a8520a80de4e13b0ead7b5"
+    },
+    "education_premia.png": {
+      "sha256": "9278993475bb7aa5a2e3d6a2582dac0ab1ce17446d4c7eee45bf663aaae2e9f3"
+    }
+  },
+  "matplotlib_version": "3.10.9"
+}

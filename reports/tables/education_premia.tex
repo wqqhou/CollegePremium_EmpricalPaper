@@ -1,0 +1,38 @@
+% Generated from outputs/regression/education_premia.csv; update after rerunning the model.
+% Source SHA256: 43894ebbf0dc1db33b118281b8a668ea4dbd15839d9ae77de457fb1c2bffb7e9
+\begin{table}[!htbp]
+\centering
+\singlespacing
+\small
+\captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=false}
+\caption{Adjusted annual earnings differences relative to high-school diploma holders}
+\label{tab:education-premia}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{0.34\linewidth}*{3}{>{\centering\arraybackslash}p{0.20\linewidth}}@{}}
+\toprule
+Highest degree by 2015 & Above income cutoff & Lower income & Difference: lower minus above \\
+ & $\widehat\beta_k$ & $\widehat\beta_k+\widehat\delta_k$ & $\widehat\delta_k$ \\
+\midrule
+No diploma/GED & \shortstack{$-9{,}418^{***}$\\$(2{,}819)$} & \shortstack{$-10{,}939^{***}$\\$(3{,}976)$} & \shortstack{$-1{,}521$\\$(4{,}818)$} \\[3pt]
+Associate degree & \shortstack{$15{,}473^{***}$\\$(5{,}066)$} & \shortstack{$7{,}048$\\$(5{,}384)$} & \shortstack{$-8{,}426$\\$(7{,}369)$} \\[3pt]
+Bachelor's degree only & \shortstack{$32{,}309^{***}$\\$(3{,}507)$} & \shortstack{$14{,}001^{**}$\\$(5{,}788)$} & \shortstack{$-18{,}308^{***}$\\$(6{,}618)$} \\[3pt]
+Graduate/professional & \shortstack{$59{,}237^{***}$\\$(5{,}512)$} & \shortstack{$75{,}540^{***}$\\$(18{,}642)$} & \shortstack{$16{,}303$\\$(19{,}355)$} \\[3pt]
+\midrule
+Person-year observations & \multicolumn{3}{c}{9,513} \\
+Respondents & \multicolumn{3}{c}{3,171} \\
+Weighted $R^2$ & \multicolumn{3}{c}{0.221} \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}
+\footnotesize\singlespacing
+\textit{Notes:} Weighted pooled OLS estimates in 2025 US dollars. Each education
+category is compared with high-school diploma holders within the same income
+group; the final column reports lower-income minus above-cutoff premiums.
+Lower income denotes the weighted bottom quintile of baseline household income
+in the analytic sample. Respondent-clustered standard errors appear in parentheses.
+Controls are described in Methodology. Stars indicate two-sided, unadjusted
+significance levels: $^{*}p<0.10$, $^{**}p<0.05$, $^{***}p<0.01$.
+\end{minipage}
+\end{table}

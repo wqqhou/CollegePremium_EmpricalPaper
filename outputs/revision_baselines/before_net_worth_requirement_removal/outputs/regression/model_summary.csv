@@ -1,0 +1,2 @@
+observations,respondents,periods,parameters,weighting,r_squared,adjusted_r_squared,cluster_df
+8547,2849,3,18,custom sampling weights normalized to mean 1,0.22599051730308806,0.22444776185627746,2848

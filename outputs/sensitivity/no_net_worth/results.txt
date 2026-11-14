@@ -1,0 +1,59 @@
+NET-WORTH SAMPLE REQUIREMENT: SENSITIVITY RESULTS
+
+Change: retain respondents with missing 1997 household net worth. Income,
+ASVAB, demographic controls, 2015 degree status, and usable earnings in all
+three years remain required. Missing wealth is not imputed or used in regression.
+
+Official custom weights were downloaded for the expanded 3,171-person sample.
+The weighted bottom-income quintile is recalculated using this sample and weights.
+The 1996 nominal-dollar cutoff changes from $21,360 to $21,613.
+Among the original 2,849 respondents, 16 change income-group classification.
+The comparison therefore includes the sample expansion, corresponding reweighting,
+and updated sample-relative income cutoff.
+
+                                    Current        Without net-worth requirement
+Respondents                           2,849          3,171
+Person-years                          8,547          9,513
+BA premium, above cutoff            $31,136        $32,309
+BA premium, lower income            $12,860        $14,001
+BA premium difference              -$18,276       -$18,308
+Clustered SE of difference           $6,828         $6,618
+95% CI of difference          [-31,664,-4,889] [-31,285,-5,332]
+Two-sided p-value of difference      0.007476       0.005701
+Joint test of four interactions p    0.090761       0.038481
+
+All earnings estimates are annual employee earnings in 2025 US dollars.
+BA means highest degree is bachelor's only by 2015; high-school diploma is the
+reference within each income group. The difference is lower income minus above
+cutoff. Weighted pooled OLS uses the same controls and 2016/2018/2020 earnings
+as the current paper, with respondent-clustered CR1 standard errors.
+
+Interpretation: the estimated BA premium gap is almost unchanged; dropping the
+net-worth completeness rule does not materially change the main finding in this
+comparison. This does not eliminate other complete-case or degree-selection issues.
+The joint test now rejects all four interactions being zero at the 5% level.
+The three non-BA interaction coefficients remain individually insignificant at 5%.
+
+FILES
+comparison_summary.csv: primary comparison at full numerical precision.
+education_premia_comparison.csv: all twelve contrasts for both samples.
+regression/: full expanded-sample coefficients, clustered covariance, and contrasts.
+processed/: clean panel, analysis panel, metadata, and requested respondent IDs.
+weights/: official weights; exact returned package retained under weights/official/.
+diagnostics/: sample flow, income cutoff, weight checks, and earnings reconstruction.
+baseline_manifest.json: hashes of the original paper and primary analysis artifacts.
+independent_audit.json: raw-sample, official-weight, and independent regression checks.
+
+VALIDATION
+All 21 automated tests passed. An independent refit using education/background
+cell intercepts reproduced all twelve contrasts and their clustered uncertainty.
+All 22 original paper and primary-analysis artifact hashes remained unchanged.
+
+REPRODUCE FROM THE PROJECT FOLDER
+(The weight-download command needs internet access; the validated download is saved.)
+
+.venv/bin/python scripts/01_clean_panel.py --net-worth-policy optional --prepare-weights --output-dir outputs/sensitivity/no_net_worth/processed --diagnostics-dir outputs/sensitivity/no_net_worth/diagnostics
+.venv/bin/python scripts/fetch_custom_weights.py --ids outputs/sensitivity/no_net_worth/processed/weight_request/respondent_ids.txt --output-dir outputs/sensitivity/no_net_worth/weights/official --install-dir outputs/sensitivity/no_net_worth/weights
+.venv/bin/python scripts/01_clean_panel.py --net-worth-policy optional --weights outputs/sensitivity/no_net_worth/weights/custom_weights.dat --output-dir outputs/sensitivity/no_net_worth/processed --diagnostics-dir outputs/sensitivity/no_net_worth/diagnostics
+.venv/bin/python scripts/02_construct_variables.py --input outputs/sensitivity/no_net_worth/processed/clean_panel.csv --output-dir outputs/sensitivity/no_net_worth/processed --diagnostics-dir outputs/sensitivity/no_net_worth/diagnostics
+.venv/bin/python scripts/03_run_regression.py --input outputs/sensitivity/no_net_worth/processed/analysis_panel.csv --output-dir outputs/sensitivity/no_net_worth/regression

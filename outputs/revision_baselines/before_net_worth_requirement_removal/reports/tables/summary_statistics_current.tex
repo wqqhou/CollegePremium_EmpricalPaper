@@ -1,0 +1,54 @@
+% Snapshot calculated from data/processed/analysis_panel.csv; refresh after changing the analysis.
+% Source SHA256: 47bb129b7040f65632298ceb2bffc697ce87bab318859db0fe5a5344afa00b89
+% SD is sqrt(sum(w*(x-weighted_mean)^2)/sum(w)); person-years only for earnings, zero earnings, and age.
+\begin{table}[!htbp]
+\centering
+\singlespacing
+\small
+\captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=false}
+\caption{Summary statistics by baseline household income}
+\label{tab:summary-statistics-current}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}p{0.40\linewidth}*{3}{>{\centering\arraybackslash}p{0.18\linewidth}}@{}}
+\toprule
+Variable & Full sample & Lower income & Above cutoff \\
+\midrule
+Annual employee earnings (\$1,000) & 67.2 (71.6) & 42.2 (49.8) & 73.4 (74.8) \\
+Household income, 1996 (\$1,000) & 109.2 (87.9) & 24.7 (12.8) & 130.4 (86.0) \\
+Household net worth, 1997 (\$1,000) & 241.6 (315.7) & 52.1 (146.9) & 289.1 (328.6) \\
+ASVAB percentile points & 53.2 (28.9) & 35.1 (26.8) & 57.8 (27.6) \\
+Age in earnings year & 36.0 (2.2) & 35.9 (2.1) & 36.0 (2.2) \\
+Zero annual employee earnings (\%) & 15.8 & 27.2 & 12.9 \\
+\addlinespace[4pt]
+Female (\%) & 48.7 & 52.8 & 47.7 \\
+Black (\%) & 15.3 & 28.4 & 12.0 \\
+Hispanic (\%) & 12.8 & 20.9 & 10.8 \\
+Mixed non-Hispanic (\%) & 1.1 & 0.4 & 1.3 \\
+Non-Black/non-Hispanic (\%) & 70.8 & 50.3 & 75.9 \\
+\addlinespace[4pt]
+No diploma/GED (\%) & 14.9 & 30.9 & 10.9 \\
+High-school diploma (\%) & 39.3 & 46.1 & 37.5 \\
+Associate degree (\%) & 9.2 & 8.6 & 9.3 \\
+Bachelor's degree only (\%) & 24.7 & 10.6 & 28.3 \\
+Graduate/professional degree (\%) & 12.0 & 3.8 & 14.1 \\
+Bachelor's degree or higher (\%) & 36.7 & 14.3 & 42.3 \\
+\midrule
+Respondents, unweighted & 2,849 & 765 & 2,084 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}
+\footnotesize\singlespacing
+\textit{Notes:} Continuous variables show weighted means with weighted standard
+deviations in parentheses; categorical variables show weighted percentages.
+All monetary values are expressed in
+thousands of 2025 US dollars. Earnings, zero-earnings shares, and age pool
+person-years from 2016, 2018, and 2020; other statistics count each respondent once.
+Each respondent contributes three observations, covering these three earnings years.
+Respondent counts are unweighted. Lower income means household income at or below \$21,360
+in nominal 1996 dollars. Net worth affects sample eligibility but is not a regression
+control. The BA-or-higher row combines the bachelor's and graduate
+categories. Percentages may not sum to 100 because of rounding.
+\end{minipage}
+\end{table}

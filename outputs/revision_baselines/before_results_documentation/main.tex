@@ -1,0 +1,255 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{newtxtext,newtxmath}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+% Match the blueprint's body-size, bold, unnumbered section headings.
+\titleformat{\section}{\normalfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{\baselineskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \centering
+    \singlespacing
+    \vspace*{1.5in}
+
+    {\bfseries Does higher education complement or substitute for family background?\par}
+    \vspace{\baselineskip}
+    Econ 4331W Development Economics\par
+    November/11/2026\par
+    Ellie Hou\par
+
+    \vfill
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\doublespacing
+\raggedright
+
+\section*{INTRODUCTION}
+Does completing a four-year college degree give students from a disadvantaged background a
+larger earnings premium? 
+
+
+This question helps inform a policy trade-off: to help students from
+disadvantaged backgrounds thrive, do we simply lower tuition, or is a reform of the whole
+education system needed? With data from the National Longitudinal Survey of Youth 1997,
+this paper examines the difference in the college earnings premium by family background,
+controlling for pre-college academic preparation, measured by ASVAB scores, and other
+demographic characteristics.
+
+I define financial disadvantage using baseline household income, which measures
+resources available before college. I distinguish completed degree levels so that
+the bachelor's premium is measured against high-school diploma holders rather
+than a mixture of high-school dropouts, diploma holders, and associate graduates.
+
+
+\section*{LITERATURE REVIEW}
+
+Mincer (1974) links earnings to schooling and work experience, treating these as human
+capital investments in earning capacity. The framework provides a foundation for answering
+my main research question by measuring how schooling can affect earning capacity.
+Furthermore, Becker and Tomes (1986) asked a broader question: how do parents influence
+their children’s human capital? In their model, parents prefer to optimize the amount of
+investment in human capital before starting to save for voluntary bequests.
+These questions also connect to the literature on wealth concentration and inequality. De
+Nardi (2015) reviews basic Bewley-style models, in which households save to protect
+consumption against earnings risk, alongside models incorporating bequests and
+intergenerational human-capital transmission. The model helps explain the role of family investment in
+differences in earning capacity. In this paper, I will focus on a narrower question: “Is college
+completion associated with narrowing income disparities among different family-background
+groups?”
+More directly, Hendricks, Koreshkova, and Leukhina (2026) study the potential effect of
+widening access to selective public universities on earning capacity. Their results show that
+expanding enrollment capacity can increase the population’s aggregate earning capacity,
+partly by admitting academically well-prepared students who were previously excluded by
+admission constraints. My analysis, on the other hand, examines whether the adjusted
+college earnings premium varies with family background.
+
+Chetty, Deming, and Friedman (2026) study admission to highly selective private
+colleges. Their need-affirmative admissions exercise uses the bottom quintile of
+parental income as a policy threshold, following Chetty et al. (2020). I adapt
+that income threshold to define a lower-income group in NLSY97. Their causal
+analysis concerns college selectivity; my analysis instead estimates conditional
+earnings associations across completed degree levels.
+
+\section*{HYPOTHESIS}
+My hypothesis is that students from lower-income families have a higher adjusted college
+earnings premium. Specifically, I test whether the bachelor's-only versus high-school
+premium is larger for the lower-income group, $\delta_{\mathrm{BA}}>0$, in the model
+described in the methodology section.
+The proposed mechanism behind my hypothesis is that college education can substitute
+for family background and thus narrow differences in human capital among students from
+different backgrounds.
+
+% TODO: Support the proposed mechanism for the secondary hypothesis with literature.
+My secondary hypothesis is that students from lower-income families are less likely to
+complete a bachelor's degree. The reasoning behind this hypothesis is that, if schools
+value outcomes associated with future earnings, colleges are incentivized to invest more
+in students with higher demonstrated potential, and that potential can logically be
+highly correlated with students' backgrounds.
+
+\section*{DATA}
+\textbf{Data source and sample.}
+For this paper, I used the data from NLSY97 (the National Longitudinal Survey of Youth)
+to construct variables. The survey includes a representative sample of Americans born
+between 1980 and 1984. The source variables I included are household income in 1996,
+parent-reported household net worth in 1997, wage income, and highest degree earned in 2015.
+
+The revised balanced panel includes 2,849 people with usable measures in three
+earnings years, giving 8,547 person-year observations. All respondents have a positive
+official custom weight for this selected panel. I retain reported zero earnings and
+recover a skipped wage amount as zero only when the income-receipt screening
+questions explicitly establish no wage income. Unresolved skips and other missing
+amounts remain excluded. This recovers 1,402 zero wage amounts and adds 726 people
+relative to the preliminary sample. Genuine negative baseline income and net worth
+are retained. For comparability, the sample continues to require observed baseline
+net worth, although wealth no longer defines the income groups.
+
+\textbf{Dependent variable $Y_{it}$.}
+$Y_{it}$ is the annual wage and salary income of the surveyed person in 2016, 2018,
+and 2020, measured in 2025 US dollars. These are the earnings years available in the
+extract, collected in the 2017, 2019, and 2021 surveys.
+Annual earnings reflect both wage rates and time worked; they are not hourly wage
+rates. Zero wage income need not imply nonemployment or zero self-employment income.
+
+\textbf{Education categories $D_{ik}$ and lower-income background $L_i$.}
+I classify highest degree by the 2015 interview into five mutually exclusive
+categories: no high-school diploma or GED only; high-school diploma; associate
+degree; bachelor's degree only; and graduate or professional degree. High-school
+diploma is the reference category. This separates associate, bachelor's, and
+graduate credentials, while retaining pooled categories for no diploma/GED and
+graduate/professional degrees. High-school diploma holders can include people who
+attended college without completing a postsecondary degree. Degree status stays
+fixed across all three earnings years.
+
+$L_i=1$ if 1996 household income is at or below its weighted 20th-percentile cutoff,
+\$21,360 in nominal 1996 dollars. I calculate this cutoff within the selected panel using
+\href{https://www.nlsinfo.org/content/weights/nlsy97}{custom NLSY97 weights}, counting
+each person once. The cutoff is the smallest observed income at which cumulative
+weight reaches 20\%; all ties at the cutoff are included. The lower-income group
+contains 765 people and represents 20.04\% of weighted respondents. The comparison
+group consists of all incomes above the cutoff, not exclusively wealthy families.
+Wealth does not enter this indicator.
+
+This is an adaptation of the bottom-quintile threshold in Chetty, Deming, and
+Friedman (2026, Section VI.A and Table V), not a replication of their income measure.
+They average parental household income over child ages 12--17 and construct
+national birth-cohort ranks; I use one year's household income and pool the
+1980--84 birth cohorts within the selected sample. I also retain one respondent
+with genuine negative baseline income, whereas their analysis excludes negative
+parental incomes. The cutoff therefore describes relative income in this analytic
+sample and is not an estimate of the national bottom-quintile threshold.
+
+\textbf{Control variables $X_{it}$.}
+I control for pre-college academic achievement using the NLSY97-created ASVAB
+math--verbal percentile score, which is normalized within three-month birth groups.
+In addition, I control for sex, age at the end of the earnings year, and race/ethnicity.
+% Verified in the archived codebook: R9829600 is the age-normalized percentile;
+% dividing by 1,000 restores its three implied decimal places.
+
+% TODO: Choose the summary-table presentation after revising the sample.
+\textit{[Insert your summary statistics table here.]}
+
+\section*{METHODOLOGY}
+I convert nominal dollars into constant 2025 dollars using annual average CPI-U,
+multiplying each value by $CPI_{2025}/CPI_t$.\footnote{The supplied CPIAUCNS series
+has no October 2025 observation, consistent with
+\href{https://www.bls.gov/news.release/archives/cpi_12182025.htm}{BLS documentation}.
+I use the mean of the 11 available months, 321.943.}
+
+The primary model is
+\[
+\begin{aligned}
+    Y_{it}={}&\alpha+\gamma L_i+\sum_{k\in\mathcal K}\beta_k D_{ik}
+              +\sum_{k\in\mathcal K}\delta_k(D_{ik}\times L_i)\\
+             &+X'_{it}\theta+\lambda_t+\epsilon_{it},
+\end{aligned}
+\]
+where $\mathcal K$ contains the four education categories other than high-school
+diploma, and $D_{ik}$ indicates membership in category $k$. $\beta_k$ is the adjusted
+earnings difference between category $k$ and high-school diploma holders among
+respondents above the income cutoff; $\beta_k+\delta_k$ is the corresponding
+difference for the lower-income group. Thus $\delta_{\mathrm{BA}}$ compares the
+bachelor's-only premium across income groups. $\lambda_t$ controls for earnings-year
+effects, and $X_{it}$ includes ASVAB percentile, sex, age, and race/ethnicity.
+
+I estimate weighted pooled OLS with year effects, applying the same custom person
+weight in each year, and cluster standard errors by person. Confidence intervals
+for $\beta_k+\delta_k$ use the full coefficient covariance. I also report a joint
+test that all four interactions are zero. These are adjusted associations, not
+causal difference-in-differences estimates: the model does not identify an
+exogenous change in education or establish parallel trends.
+
+The income-only 20\% definition was chosen from the literature before fitting this
+revised model. It is not preregistered: the preliminary report explored several
+joint income-and-wealth cutoffs and selected 60\% by its smallest interaction
+$p$-value. The new citation does not retrospectively justify that earlier choice.
+
+\section*{RESULTS}
+% Numerical prose updated from outputs/regression; presentation remains for revision.
+The adjusted bachelor's-only versus high-school earnings premium is \$12,860 for
+the lower-income group and \$31,136 for respondents above the cutoff, in 2025 dollars.
+The estimated difference is $\hat\delta_{\mathrm{BA}}=-\$18,276$
+(clustered standard error \$6,828; $p=0.0075$; 95\% confidence interval:
+$-\$31,664$ to $-\$4,889$). This estimate runs against my hypothesis of a larger
+bachelor's premium for lower-income students. The joint test of all four education
+interactions yields $F(4,2848)=2.008$ ($p=0.091$), which does not reject their joint
+equality to zero at the 5\% level. These tests address different hypotheses.
+The lower-income group contains only 25 graduate/professional degree holders,
+so its graduate-premium estimate is imprecise.
+
+% TODO: Choose the figure and regression-table presentation later.
+\textit{[Insert your figure and its interpretation here.]}
+\textit{[Insert your regression results table here.]}
+
+Using the custom weights, 14.3\% of the lower-income group completed a bachelor's
+degree or higher, compared with 42.3\% of the other group. This descriptive comparison
+is consistent with my secondary hypothesis. These results describe weighted
+associations within the selected balanced panel. The pointwise tests do not adjust
+for multiple comparisons, estimated-cutoff uncertainty, or the full survey design.
+Missing data, topcoded earnings, and unobserved differences
+limit the interpretation; the analysis does not establish a causal effect of college
+completion on wealth inequality.
+
+\section*{EXTENSIONS}
+The smaller bachelor's premium for lower-income respondents is consistent with
+complementarity between education and family resources, but this observational
+comparison does not establish that mechanism. Selection into degree completion,
+differences in time worked, and the measurement of family resources could also
+contribute. Future checks can examine baseline wealth separately and assess
+sensitivity to the single-year income measure and sample restrictions.
+
+% TODO: Substantiate these channels. College selectivity is not defined for
+% never-attenders and may be a pathway, so adding it as a control changes the question.
+One additional theory for future research is that, even if students from disadvantaged
+backgrounds indeed have a lower college premium, this might be because they tend to
+attend less selective schools (affected by cost, nepotism, and unobserved academic
+preparation). Hence, further research with additional control variables such as the
+selectivity of the college attended can be helpful.
+
+\section*{REFERENCES}
+\begin{list}{}{\setlength{\leftmargin}{0.3in}
+              \setlength{\itemindent}{-0.3in}
+              \setlength{\itemsep}{0.6\baselineskip}
+              \setlength{\parsep}{0pt}}
+\item Becker, Gary S., and Nigel Tomes. 1986. ``Human Capital and the Rise and Fall of Families.'' \textit{Journal of Labor Economics} 4 (3, Part 2): S1--S39.
+\item Chetty, Raj, David J. Deming, and John N. Friedman. 2026. ``Diversifying Society's Leaders? The Determinants and Causal Effects of Admission to Highly Selective Private Colleges.'' \textit{Quarterly Journal of Economics} 141 (1): 51--145. \href{https://doi.org/10.1093/qje/qjaf050}{doi:10.1093/qje/qjaf050}.
+\item Chetty, Raj, John N. Friedman, Emmanuel Saez, Nicholas Turner, and Danny Yagan. 2020. ``Income Segregation and Intergenerational Mobility Across Colleges in the United States.'' \textit{Quarterly Journal of Economics} 135 (3): 1567--1633. \href{https://doi.org/10.1093/qje/qjaa005}{doi:10.1093/qje/qjaa005}.
+\item De Nardi, Mariacristina. 2015. ``Quantitative Models of Wealth Inequality: A Survey.'' NBER Working Paper 21106.
+\item Hendricks, L., T. Koreshkova, and O. Leukhina. 2026. ``Expanding Access to Selective Colleges.'' Federal Reserve Bank of St. Louis Working Paper 2026-005.
+\item Mincer, Jacob A. 1974. \textit{Schooling, Experience, and Earnings}. National Bureau of Economic Research.
+\end{list}
+\end{document}

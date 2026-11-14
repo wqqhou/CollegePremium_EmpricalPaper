@@ -1,0 +1,18 @@
+{
+  "outputs/regression/cluster_covariance.csv": "ba19aa45cb8575770eb02920e98b0b094f5a94fe84a1faae51a78e6257ac77eb",
+  "outputs/regression/completion_by_background.csv": "1fecf291ee8bf89fd2ed63234151ce1effe8e1bf408831b6ef6150539714db28",
+  "outputs/regression/education_by_background.csv": "3296094393fcc2afae8485dee264630c01256a7e2d49d4de48e0d635cef65769",
+  "outputs/regression/education_premia.csv": "43894ebbf0dc1db33b118281b8a668ea4dbd15839d9ae77de457fb1c2bffb7e9",
+  "outputs/regression/joint_interaction_test.csv": "f244052f8767063f0d088cd7e760548a517b3ebd635fff2c37d8e973bdda8ec4",
+  "outputs/regression/model_summary.csv": "572b13ed99cc69df2d6471cb6586863716222a1de8b4a3ec214933fbc97c1e23",
+  "outputs/regression/regression_coefficients.csv": "4972c3cda28e7be8bd896ca1c79ed23d4c39160b3a0692279b49c9fdcfef0f64",
+  "outputs/regression/regression_metadata.json": "606427155505dec634c6d120675d4ffa430045b11bf24479f6e6e371004aa829",
+  "data/processed/analysis_panel.csv": "e1832590e1f7343920a575afc5e03e8b71cc229244369c913f30ad3b42e377a4",
+  "reports/tables/education_premia.tex": "772734c67c95bc1ce24d23dfa78552cd8cfa9c4ee9ba7987d14b230357fcf41d",
+  "reports/tables/summary_demographics_education.tex": "c84566e862ac1669cb6a97ab5e3008b4c73db748a9f0b2ec2cf69393a584e3b1",
+  "reports/tables/summary_statistics.tex": "95e09fb1838e326cbcdf0dc3c9e368028eed582decf03be4b26b60c0e2e181d7",
+  "reports/tables/summary_statistics_current.tex": "9e1ec46d874971074b771254e048dc8163cc31594eb5a78fed28488daae4c944",
+  "reports/figures/education_premia.pdf": "129711a409a386a8d33d1754da2b6a7038d75eed896b1f20004b4a4a10dfac54",
+  "reports/figures/education_premia.png": "059d097af5d88c7710771c93618a98655c9f4b078834a25f6c555b90bd15f0c7",
+  "reports/figures/education_premia_figure_metadata.json": "6a948722af15aad05018367cfb704962fa32765579ba0993d474f2f033a185ab"
+}

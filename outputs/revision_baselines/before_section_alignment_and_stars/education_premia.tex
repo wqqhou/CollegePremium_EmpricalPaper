@@ -1,0 +1,39 @@
+% Generated from outputs/regression/education_premia.csv; update after rerunning the model.
+% Source SHA256: b34df557db66e883b1579addd5f4097d701f8178a7478a5e5e819e70fe3587d7
+\begin{table}[!htbp]
+\centering
+\singlespacing
+\small
+\captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=false}
+\caption{Adjusted annual earnings differences relative to high-school diploma holders}
+\label{tab:education-premia}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{0.34\linewidth}*{3}{>{\centering\arraybackslash}p{0.20\linewidth}}@{}}
+\toprule
+Highest degree by 2015 & Above income cutoff & Lower income & Difference: lower minus above \\
+ & $\widehat\beta_k$ & $\widehat\beta_k+\widehat\delta_k$ & $\widehat\delta_k$ \\
+\midrule
+No diploma/GED & \shortstack{$-8{,}495$\\$(2{,}939)$} & \shortstack{$-11{,}298$\\$(4{,}227)$} & \shortstack{$-2{,}803$\\$(5{,}107)$} \\[3pt]
+Associate degree & \shortstack{$16{,}154$\\$(5{,}428)$} & \shortstack{$8{,}536$\\$(5{,}670)$} & \shortstack{$-7{,}618$\\$(7{,}837)$} \\[3pt]
+Bachelor's degree only & \shortstack{$31{,}136$\\$(3{,}819)$} & \shortstack{$12{,}860$\\$(5{,}904)$} & \shortstack{$-18{,}276$\\$(6{,}828)$} \\[3pt]
+Graduate/professional & \shortstack{$62{,}980$\\$(5{,}884)$} & \shortstack{$65{,}390$\\$(20{,}371)$} & \shortstack{$2{,}410$\\$(21{,}045)$} \\[3pt]
+\midrule
+Person-year observations & \multicolumn{3}{c}{8,547} \\
+Respondents & \multicolumn{3}{c}{2,849} \\
+Weighted $R^2$ & \multicolumn{3}{c}{0.226} \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}
+\footnotesize\singlespacing
+\textit{Notes:} Estimates are annual earnings differences in 2025 US dollars;
+respondent-clustered CR1 standard errors are in parentheses. All columns are
+contrasts from one weighted pooled OLS regression. Each degree is compared with
+high-school diploma holders in the same income group. Lower income means 1996
+household income at or below \$21,360. Controls include ASVAB percentile, sex,
+year-end age, race/ethnicity, and earnings-year effects. Official custom person
+weights are used. The joint test of all four interactions is
+$F(4,2848)=2.008$ ($p=0.0908$).
+\end{minipage}
+\end{table}

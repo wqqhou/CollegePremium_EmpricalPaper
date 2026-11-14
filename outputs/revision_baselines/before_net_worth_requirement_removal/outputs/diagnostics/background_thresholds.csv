@@ -1,0 +1,2 @@
+variable,observed_respondents,percentile,method,nominal_cutoff,cutoff_2025,weighted_share_strictly_below,weighted_share_at_or_below
+household_income_1996,2849,0.2,inverse weighted empirical CDF within selected balanced panel,21360.0,43842.54051641697,0.19990513288081171,0.20039039968995173

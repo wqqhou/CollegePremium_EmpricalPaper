@@ -1,0 +1,18 @@
+{
+  "source": "https://www.nlsinfo.org/nlsinfo-services-api/weights/NLSY97/download",
+  "retrieved_at_utc": "2026-11-13T23:47:33.285243+00:00",
+  "request_mode": "Weight IDs; no survey-year fields submitted",
+  "request_file": "/Users/matt/Desktop/E4331_ER/data/processed/weight_request/respondent_ids.txt",
+  "request_sha256": "53725a485e9d0fa0e2647153b47410216c27bd3ded6b80a27e460239d34a1309",
+  "requested_respondents": 2849,
+  "positive_weight_respondents": 2849,
+  "zero_weight_rows_outside_sample": 0,
+  "weight_units": "Official stored values; two implied decimal places",
+  "weight_min_raw": 83584.0,
+  "weight_max_raw": 4252611.0,
+  "download_content_type": "",
+  "download_content_disposition": "attachment; filename=customweight_nlsy97_6af7a18f1a1d74f1a5b.zip",
+  "zip_sha256": "6707ca98ea4bd3d5fac01ec175bcce72a6c869a7b946c0319e84141e4aaccd55",
+  "installed_weight_sha256": "ab8d6f82ef284a0e37c9ed5ad4e28b4de2f4ecec120aa2a8a34225b2fd400057",
+  "package_directory": "/Users/matt/Desktop/E4331_ER/data/raw/weights_receipt_confirmed"
+}

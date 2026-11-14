@@ -1,0 +1,120 @@
+{
+  "input": {
+    "path": "/Users/matt/Desktop/E4331_ER/data/processed/analysis_panel.csv",
+    "sha256": "47bb129b7040f65632298ceb2bffc697ce87bab318859db0fe5a5344afa00b89"
+  },
+  "variable_metadata": {
+    "path": "/Users/matt/Desktop/E4331_ER/data/processed/variable_metadata.json",
+    "sha256": "46b1786243ed75f752096adc2b3e0efbd8b1cbce97b332307000847b25f86610"
+  },
+  "configuration": {
+    "background_definition": "income",
+    "background_percentile": 0.2,
+    "base_dollar_year": 2025,
+    "earnings_years": [
+      2016,
+      2018,
+      2020
+    ],
+    "earnings_policy": "receipt-confirmed",
+    "education_model": "categorical"
+  },
+  "background_definition": {
+    "income_cutoff_1996_nominal": 21360.0,
+    "net_worth_cutoff_1997_nominal": null,
+    "rule": "1996 household income at or below its weighted percentile cutoff; ties kept together",
+    "reference_population": "Selected panel, birth years 1980-1984 pooled, each respondent counted once",
+    "weighted_lower_background_share": 0.20039039968995173,
+    "lower_background_respondents": 765,
+    "negative_baseline_income_respondents_retained": 1,
+    "literature_motivation": {
+      "citation": "Chetty, Raj, David J. Deming, and John N. Friedman (2026). Diversifying Society's Leaders? The Determinants and Causal Effects of Admission to Highly Selective Private Colleges. Quarterly Journal of Economics 141(1): 51-145.",
+      "doi": "https://doi.org/10.1093/qje/qjaf050",
+      "author_version": "https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Paper.pdf",
+      "location": "Section 6.1, p. 43, and Table V, row 7, in the August 2025 author version",
+      "use_in_source": "The need-affirmative admissions counterfactual gives the bottom parental-income quintile the largest boost, following Chetty et al. (2020). This is not the source paper's earnings-regression specification.",
+      "source_income_measure": "Parental household income averaged over child ages 12-17, ranked against parents of children in the same national birth cohort; negative parental income is excluded.",
+      "adaptation": "Single-year 1996 household income in the selected NLSY97 panel, pooling birth years 1980-1984 with custom person weights. Genuine negative baseline income is retained. These are sample-relative ranks, not national birth-cohort ranks.",
+      "foundational_reference": "Chetty, Friedman, Saez, Turner, and Yagan (2020). Income Segregation and Intergenerational Mobility Across Colleges in the United States. Quarterly Journal of Economics 135(3): 1567-1633. https://doi.org/10.1093/qje/qjaa005"
+    }
+  },
+  "education_definition": {
+    "source": "Highest degree earned by the 2015 interview",
+    "categories": {
+      "0": "no_diploma_or_ged",
+      "1": "high_school",
+      "2": "associate",
+      "3": "bachelor",
+      "4": "graduate"
+    },
+    "highest_degree_code_to_category": {
+      "0": 0,
+      "1": 0,
+      "2": 1,
+      "3": 2,
+      "4": 3,
+      "5": 4,
+      "6": 4,
+      "7": 4
+    },
+    "pooled_groups": "Codes 0/1 pool no degree and GED; codes 5/6/7 pool master's, doctoral, and professional degrees."
+  },
+  "formula": "wage_2025 ~ education_category(reference=high_school) * low_background + asvab_percentile + female + age + race + factor(year)",
+  "reference_categories": {
+    "education_category": 1,
+    "low_background": 0,
+    "female": 0,
+    "race_ethnicity": 4,
+    "year": 2016
+  },
+  "estimation": "Weighted pooled OLS; same respondent sampling weight in every earnings year",
+  "covariance": "Respondent-clustered sandwich with weighted scores and CR1 factor G/(G-1)*(N-1)/(N-K)",
+  "inference": "Two-sided Student-t tests and 95% pointwise confidence intervals with G-1 degrees of freedom; categorical model additionally reports the joint CR1 Wald F(4,G-1) test of interactions",
+  "sample": {
+    "observations": 8547,
+    "respondents": 2849,
+    "periods": 3,
+    "parameters": 18,
+    "weighting": "custom sampling weights normalized to mean 1",
+    "r_squared": 0.22599051730308806,
+    "adjusted_r_squared": 0.22444776185627746,
+    "cluster_df": 2848
+  },
+  "limitations": [
+    "Associations, not a causal difference-in-differences design.",
+    "Screening-confirmed zero wage amounts are included; unresolved skips and other missing amounts remain excluded.",
+    "The definition and reference population of family background are inherited from stage 2; see background_definition and its source/adaptation notes.",
+    "Inference conditions on the chosen background definition and does not adjust for estimated-cutoff uncertainty, multiple pointwise contrasts, or the full survey design.",
+    "Education is degree status at the 2015 interview, not college attendance or updated degree status; the high-school reference can include people who attended college without earning a postsecondary degree.",
+    "Earlier exploratory specifications were examined before this revision; this is not a preregistered analysis."
+  ],
+  "software": {
+    "python": "3.11.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "scipy": "1.17.1"
+  },
+  "outputs": {
+    "regression_coefficients.csv": {
+      "sha256": "9fc6682aa16c240e89ff05ff4060517336dc2a690621467ee3060b816a7a4746"
+    },
+    "model_summary.csv": {
+      "sha256": "f64fe28c2885f1141f252911b6cbec0b97dae436ebfaa25f428c58577bd66493"
+    },
+    "completion_by_background.csv": {
+      "sha256": "858b8deeb863a8cef9ed6878415183156c630718129f50b93301428508ed5649"
+    },
+    "education_premia.csv": {
+      "sha256": "b34df557db66e883b1579addd5f4097d701f8178a7478a5e5e819e70fe3587d7"
+    },
+    "education_by_background.csv": {
+      "sha256": "3124161bcc9c28b21f1c2ce7aa39f539ab12dff6799b357104eb6f3cd80125b0"
+    },
+    "joint_interaction_test.csv": {
+      "sha256": "3f21536c1a4a0a35a9a0d2846db7a77488e8603aa1f1e826bc79ff71c5eee7bf"
+    },
+    "cluster_covariance.csv": {
+      "sha256": "96087394f5087e30f867e7ce67be30f38f4d78e3a1becf0d1539cc267f67a286"
+    }
+  }
+}

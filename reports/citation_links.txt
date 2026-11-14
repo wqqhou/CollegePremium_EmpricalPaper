@@ -1,0 +1,83 @@
+CITATION LINKS FOR main.tex
+Prepared November 13, 2026.
+
+REFERENCES IN THE PAPER
+
+1. Becker, Gary S., and Nigel Tomes (1986).
+   "Human Capital and the Rise and Fall of Families."
+   Journal of Labor Economics 4(3, Part 2): S1-S39.
+   Publisher / DOI: https://doi.org/10.1086/298118
+
+2. Chetty, Raj, David J. Deming, and John N. Friedman (2026).
+   "Diversifying Society's Leaders? The Determinants and Causal Effects of
+   Admission to Highly Selective Private Colleges."
+   Quarterly Journal of Economics 141(1): 51-145.
+   Published article: https://doi.org/10.1093/qje/qjaf050
+   Free author manuscript: https://opportunityinsights.org/wp-content/uploads/2023/07/CollegeAdmissions_Paper.pdf
+   Note: The linked manuscript is dated August 2025; the journal issue is
+   February 2026. For the bottom-20% definition, see Section 6.1 and Table V
+   in the manuscript. Its national income ranks differ from our sample ranks.
+
+3. Chetty, Raj, John N. Friedman, Emmanuel Saez, Nicholas Turner,
+   and Danny Yagan (2020).
+   "Income Segregation and Intergenerational Mobility Across Colleges
+   in the United States."
+   Quarterly Journal of Economics 135(3): 1567-1633.
+   Published article: https://doi.org/10.1093/qje/qjaa005
+   Free author-hosted PDF: https://eml.berkeley.edu/~saez/chettyetalQJE20college.pdf
+
+4. De Nardi, Mariacristina (2015).
+   "Quantitative Models of Wealth Inequality: A Survey."
+   NBER Working Paper 21106.
+   Official page: https://www.nber.org/papers/w21106
+
+5. Hendricks, L., T. Koreshkova, and O. Leukhina (2026).
+   "Expanding Access to Selective Colleges."
+   Federal Reserve Bank of St. Louis Working Paper 2026-005C, June.
+   June revision record: https://fedinprint.org/item/fedlwp/102965/103406
+   DOI / full text: https://doi.org/10.20955/wp.2026.005
+   Version confirmation: https://www.stlouisfed.org/research/economists/leukhina
+   Version note: The June citation in main.tex now links to the matching
+   June record ending /103406 (corrected from the May record /103306).
+
+6. Mincer, Jacob A. (1974).
+   Schooling, Experience, and Earnings.
+   National Bureau of Economic Research.
+   Official book and chapter links: https://www.nber.org/books-and-chapters/schooling-experience-and-earnings
+
+7. U.S. Bureau of Labor Statistics (n.d.-a).
+   "Administration of the CAT-ASVAB."
+   NLSY97 Topical Guide.
+   https://nlsinfo.org/content/cohorts/nlsy97/topical-guide/education/administration-cat-asvab-0
+
+8. U.S. Bureau of Labor Statistics (n.d.-b).
+   "Appendix 10: CAT-ASVAB Scores."
+   NLSY97 Codebook Supplement.
+   https://nlsinfo.org/content/cohorts/nlsy97/other-documentation/codebook-supplement/appendix-10-cat-asvab-scores
+
+9. U.S. Bureau of Labor Statistics (n.d.-c).
+   "Income."
+   NLSY97 Topical Guide.
+   https://nlsinfo.org/content/cohorts/nlsy97/topical-guide/income/income
+   Also check the local extract codebook for R9829600 and the 2017, 2019,
+   and 2021 YINC-1700 earnings entries: data/raw/nlsy97_codebook.cdb
+   (Local paths in this file are relative to the project folder.)
+
+ADDITIONAL SOURCES LINKED IN THE PAPER'S TEXT
+
+10. NLSY97 custom survey weights.
+    Official tool: https://www.nlsinfo.org/content/weights/nlsy97
+    Documentation: https://nlsinfo.org/content/weights/custom-weighting-program-documentation
+
+11. U.S. Bureau of Labor Statistics, CPI release of December 18, 2025.
+    Source for the October 2025 CPI data-collection gap.
+    https://www.bls.gov/news.release/archives/cpi_12182025.htm
+
+ADDITIONAL PAPER DISCUSSED IN CHAT (NOT CURRENTLY CITED IN main.tex)
+
+12. Carneiro, Pedro, James J. Heckman, and Edward J. Vytlacil (2011).
+    "Estimating Marginal Returns to Education."
+    American Economic Review 101(6): 2754-2781.
+    https://www.aeaweb.org/articles?id=10.1257/aer.101.6.2754
+    Relevant to selection on gains. It does not establish the direction of
+    selection bias in our comparison between family-income groups.

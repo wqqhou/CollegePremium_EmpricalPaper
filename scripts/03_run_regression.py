@@ -1,9 +1,11 @@
-"""Estimate the archived college/background interaction model using Python.
+"""Estimate education-by-family-background earnings associations using Python.
 
 Run after 01_clean_panel.py and 02_construct_variables.py. Outputs are numeric
 CSV files and a JSON record of the specification; no figures or LaTeX tables
 are generated. Sampling weights and respondent-clustered CR1 standard errors
-match the previous R analysis.
+match the previous R analysis. The default uses five education categories,
+with high-school diploma as the reference. Use --education-model binary to
+replicate the archived BA+ versus no-BA specification.
 """
 
 import argparse
@@ -17,25 +19,44 @@ import numpy as np
 import pandas as pd
 import scipy
 from scipy.stats import t as student_t
+from scipy.stats import f as fisher_f
 
 
 ROOT = Path(__file__).resolve().parents[1]
+EDUCATION_LABELS = {
+    0: "no_diploma_or_ged",
+    1: "high_school",
+    2: "associate",
+    3: "bachelor",
+    4: "graduate",
+}
+DEGREE_TO_CATEGORY = {0: 0, 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 4, 7: 4}
+NONREFERENCE_EDUCATION = {code: label for code, label in EDUCATION_LABELS.items() if code != 1}
 
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def read_panel(path, metadata_path):
+def read_panel(path, metadata_path, education_model="categorical"):
+    if education_model not in ("categorical", "binary"):
+        raise ValueError("Education model must be categorical or binary.")
     if not path.is_file() or not metadata_path.is_file():
         raise ValueError("Analysis panel or variable metadata is missing. Run stage 2 first.")
     metadata = json.loads(metadata_path.read_text())
     expected_hash = metadata.get("outputs", {}).get("analysis_panel", {}).get("sha256")
     if expected_hash != sha256(path):
         raise ValueError("Analysis panel does not match its variable metadata. Rerun stage 2.")
+    clean_input = metadata.get("inputs", {}).get("clean_panel", {})
+    if clean_input.get("path"):
+        upstream = Path(clean_input["path"])
+        if upstream.is_file() and clean_input.get("sha256") != sha256(upstream):
+            raise ValueError("Clean panel has changed since variable construction. Rerun stage 2 before regression.")
     panel = pd.read_csv(path)
     required = ["id", "year", "wage_2025", "college", "low_background",
                 "asvab_percentile", "female", "age", "race_ethnicity", "regression_weight"]
+    if education_model == "categorical":
+        required += ["education_category", "highest_degree_2015"]
     missing = sorted(set(required) - set(panel.columns))
     if missing:
         raise ValueError(f"Analysis panel is missing columns: {missing}")
@@ -53,6 +74,15 @@ def read_panel(path, metadata_path):
     groups = panel.groupby("id", sort=True)
     stable = ["college", "low_background", "asvab_percentile", "female",
               "race_ethnicity", "regression_weight"]
+    if education_model == "categorical":
+        if not panel.education_category.isin(EDUCATION_LABELS).all():
+            raise ValueError("Education category must use codes 0 through 4.")
+        expected_category = panel.highest_degree_2015.map(DEGREE_TO_CATEGORY)
+        if not panel.education_category.eq(expected_category).all():
+            raise ValueError("Education categories do not match highest degree by 2015. Rerun stage 2.")
+        if not panel.college.eq(panel.education_category.ge(3).astype(int)).all():
+            raise ValueError("BA+ indicator and education categories disagree. Rerun stage 2.")
+        stable += ["education_category", "highest_degree_2015"]
     if (groups[stable].nunique() != 1).any().any():
         raise ValueError("Baseline variables and respondent weights must be constant within person.")
     years = sorted(panel.year.unique().tolist())
@@ -62,22 +92,33 @@ def read_panel(path, metadata_path):
     if expected_years is not None and years != sorted(expected_years):
         raise ValueError("Earnings years do not match variable metadata.")
     people = panel.drop_duplicates("id")
-    if len(people.groupby(["low_background", "college"])) != 4:
-        raise ValueError("All four background-by-degree groups are needed for the interaction.")
+    degree_variable = "education_category" if education_model == "categorical" else "college"
+    expected_cells = 10 if education_model == "categorical" else 4
+    if len(people.groupby(["low_background", degree_variable])) != expected_cells:
+        raise ValueError(f"All {expected_cells} background-by-education groups are needed for the interaction.")
     return panel.sort_values(["id", "year"]).reset_index(drop=True), metadata
 
 
-def design_matrix(panel):
+def design_matrix(panel, education_model="categorical"):
     # R's archived formula orders the interaction last. Preserve its term names
     # so coefficients can be compared directly with the archived CSV outputs.
-    columns = {
-        "(Intercept)": np.ones(len(panel)),
-        "college": panel.college.to_numpy(),
+    columns = {"(Intercept)": np.ones(len(panel))}
+    if education_model == "binary":
+        degree_columns = {"college": panel.college.to_numpy()}
+    elif education_model == "categorical":
+        degree_columns = {
+            f"education[{label}]": panel.education_category.eq(code).to_numpy(dtype=float)
+            for code, label in NONREFERENCE_EDUCATION.items()
+        }
+    else:
+        raise ValueError("Education model must be categorical or binary.")
+    columns.update(degree_columns)
+    columns.update({
         "low_background": panel.low_background.to_numpy(),
         "asvab_percentile": panel.asvab_percentile.to_numpy(),
         "female": panel.female.to_numpy(),
         "age": panel.age.to_numpy(),
-    }
+    })
     if 4 not in panel.race_ethnicity.unique():
         raise ValueError("The specified race reference category (code 4) is absent.")
     for code, label in [(1, "raceBlack"), (2, "raceHispanic"), (3, "raceMixedNonHispanic")]:
@@ -86,12 +127,13 @@ def design_matrix(panel):
     years = sorted(panel.year.unique())
     for year in years[1:]:
         columns[f"factor(year){int(year)}"] = (panel.year == year).to_numpy(dtype=float)
-    columns["college:low_background"] = (panel.college * panel.low_background).to_numpy()
+    for term, values in degree_columns.items():
+        columns[f"{term}:low_background"] = values * panel.low_background.to_numpy()
     return np.column_stack(list(columns.values())).astype(float), list(columns)
 
 
-def estimate(panel):
-    x, terms = design_matrix(panel)
+def estimate(panel, education_model="categorical"):
+    x, terms = design_matrix(panel, education_model)
     y = panel.wage_2025.to_numpy(dtype=float)
     w = panel.regression_weight.to_numpy(dtype=float)
     n, k = x.shape
@@ -128,17 +170,29 @@ def estimate(panel):
         "ci_high": coefficients + critical * standard_errors,
     })
     contrasts = []
-    for label, selected in [
-        ("Other backgrounds (L=0)", ["college"]),
-        ("Lower background (L=1)", ["college", "college:low_background"]),
-        ("Difference (L=1 minus L=0)", ["college:low_background"]),
-    ]:
-        vector = np.array([float(term in selected) for term in terms])
-        value = float(vector @ coefficients)
-        se = float(np.sqrt(vector @ covariance @ vector))
-        contrasts.append(dict(contrast=label, estimate=value, cluster_se=se,
-            p_value=float(2 * student_t.sf(abs(value / se), df)),
-            ci_low=value - critical * se, ci_high=value + critical * se))
+    degree_terms = {"college": "college"} if education_model == "binary" else {
+        label: f"education[{label}]" for label in NONREFERENCE_EDUCATION.values()
+    }
+    for degree, degree_term in degree_terms.items():
+        interaction_term = f"{degree_term}:low_background"
+        for label, selected in [
+            ("Other backgrounds (L=0)", [degree_term]),
+            ("Lower background (L=1)", [degree_term, interaction_term]),
+            ("Difference (L=1 minus L=0)", [interaction_term]),
+        ]:
+            vector = np.array([float(term in selected) for term in terms])
+            value = float(vector @ coefficients)
+            variance = float(vector @ covariance @ vector)
+            if variance <= 0 or not np.isfinite(variance):
+                raise ValueError(f"Invalid contrast variance for {degree}: {label}.")
+            se = float(np.sqrt(variance))
+            row = {} if education_model == "binary" else {
+                "education": degree, "reference_education": "high_school",
+            }
+            row.update(contrast=label, estimate=value, cluster_se=se,
+                p_value=float(2 * student_t.sf(abs(value / se), df)),
+                ci_low=value - critical * se, ci_high=value + critical * se)
+            contrasts.append(row)
     total_ss = np.sum(w * (y - np.average(y, weights=w)) ** 2)
     if total_ss <= 0:
         raise ValueError("Earnings must have nonzero weighted variance.")
@@ -150,15 +204,52 @@ def estimate(panel):
     return coefficient_table, pd.DataFrame(covariance, index=terms, columns=terms), pd.DataFrame(contrasts), summary
 
 
+def joint_interaction_test(coefficients, covariance, cluster_df):
+    """CR1 Wald F test that every education/background interaction is zero."""
+    terms = [f"education[{label}]:low_background" for label in NONREFERENCE_EDUCATION.values()]
+    values = coefficients.set_index("term").loc[terms, "estimate"].to_numpy()
+    restriction_covariance = covariance.loc[terms, terms].to_numpy()
+    restrictions = len(terms)
+    if np.linalg.matrix_rank(restriction_covariance) != restrictions:
+        raise ValueError("Joint interaction covariance is singular; the joint test is not identified.")
+    wald = float(values @ np.linalg.solve(restriction_covariance, values))
+    if not np.isfinite(wald) or wald < 0:
+        raise ValueError("Invalid joint interaction Wald statistic.")
+    statistic = wald / restrictions
+    return pd.DataFrame([{
+        "null": "All four education-by-background interactions equal zero",
+        "wald_statistic": wald, "f_statistic": statistic,
+        "df_numerator": restrictions, "df_denominator": cluster_df,
+        "p_value": float(fisher_f.sf(statistic, restrictions, cluster_df)),
+    }])
+
+
+def education_by_background(people):
+    """Person-level cell counts and weighted degree shares within each group."""
+    rows = []
+    for group, members in people.groupby("low_background", sort=True):
+        group_weight = members.regression_weight.sum()
+        for code, label in EDUCATION_LABELS.items():
+            cell = members.loc[members.education_category.eq(code)]
+            rows.append({
+                "low_background": int(group), "education_category": code,
+                "education": label, "respondents": len(cell),
+                "weighted_share_within_background": float(cell.regression_weight.sum() / group_weight),
+            })
+    return pd.DataFrame(rows)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--input", type=Path, default=ROOT / "data/processed/analysis_panel.csv")
     parser.add_argument("--metadata", type=Path, help="Defaults to variable_metadata.json beside the input panel.")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "outputs/regression")
+    parser.add_argument("--education-model", choices=["categorical", "binary"], default="categorical",
+                        help="Default: five education categories, high-school diploma reference. Binary reproduces the archived BA+ model.")
     args = parser.parse_args()
     metadata_path = args.metadata or args.input.parent / "variable_metadata.json"
-    panel, variable_metadata = read_panel(args.input, metadata_path)
-    coefficients, covariance, premia, summary = estimate(panel)
+    panel, variable_metadata = read_panel(args.input, metadata_path, args.education_model)
+    coefficients, covariance, premia, summary = estimate(panel, args.education_model)
     people = panel.drop_duplicates("id")
     total_weight = people.regression_weight.sum()
     completion = []
@@ -170,31 +261,54 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     outputs = {
         "regression_coefficients.csv": coefficients,
-        "college_premia.csv": premia,
         "model_summary.csv": pd.DataFrame([summary]),
         "completion_by_background.csv": pd.DataFrame(completion),
     }
+    if args.education_model == "categorical":
+        outputs["education_premia.csv"] = premia
+        outputs["education_by_background.csv"] = education_by_background(people)
+        outputs["joint_interaction_test.csv"] = joint_interaction_test(coefficients, covariance, summary["cluster_df"])
+        obsolete_outputs = ["college_premia.csv"]
+    else:
+        outputs["college_premia.csv"] = premia
+        obsolete_outputs = ["education_premia.csv", "education_by_background.csv", "joint_interaction_test.csv"]
+    # Remove only known generated files belonging to the other model, so they
+    # cannot be mistaken for results of this run. All checks above have passed.
+    for filename in obsolete_outputs:
+        (args.output_dir / filename).unlink(missing_ok=True)
     for filename, frame in outputs.items():
         frame.to_csv(args.output_dir / filename, index=False)
     covariance.to_csv(args.output_dir / "cluster_covariance.csv")
     metadata = {
         "input": {"path": str(args.input.resolve()), "sha256": sha256(args.input)},
         "variable_metadata": {"path": str(metadata_path.resolve()), "sha256": sha256(metadata_path)},
-        "configuration": variable_metadata.get("configuration", {}),
+        "configuration": {**variable_metadata.get("configuration", {}), "education_model": args.education_model},
         "background_definition": variable_metadata.get("background_definition", {}),
-        "formula": "wage_2025 ~ college * low_background + asvab_percentile + female + age + race + factor(year)",
-        "reference_categories": {"college": 0, "low_background": 0, "female": 0,
+        "education_definition": {
+            "source": "Highest degree earned by the 2015 interview",
+            "categories": EDUCATION_LABELS,
+            "highest_degree_code_to_category": DEGREE_TO_CATEGORY,
+            "pooled_groups": "Codes 0/1 pool no degree and GED; codes 5/6/7 pool master's, doctoral, and professional degrees.",
+        },
+        "formula": ("wage_2025 ~ education_category(reference=high_school) * low_background + asvab_percentile + female + age + race + factor(year)"
+                    if args.education_model == "categorical" else
+                    "wage_2025 ~ college * low_background + asvab_percentile + female + age + race + factor(year)"),
+        "reference_categories": {("education_category" if args.education_model == "categorical" else "college"):
+                                 (1 if args.education_model == "categorical" else 0), "low_background": 0, "female": 0,
                                  "race_ethnicity": 4, "year": int(panel.year.min())},
         "estimation": "Weighted pooled OLS; same respondent sampling weight in every earnings year",
         "covariance": "Respondent-clustered sandwich with weighted scores and CR1 factor G/(G-1)*(N-1)/(N-K)",
-        "inference": "Two-sided Student-t tests and 95% pointwise confidence intervals with G-1 degrees of freedom",
+        "inference": ("Two-sided Student-t tests and 95% pointwise confidence intervals with G-1 degrees of freedom; categorical model additionally reports the joint CR1 Wald F(4,G-1) test of interactions"),
         "sample": summary,
         "limitations": [
             "Associations, not a causal difference-in-differences design.",
-            "Valid-skip earnings amounts remain excluded pending receipt-filter verification.",
-            "The inherited 60th-percentile background definition was selected after exploratory comparisons.",
-            "Inference does not adjust for cutoff selection, estimated-cutoff uncertainty, or the full survey design.",
-            "BA+ is degree status at the 2015 interview, not college attendance or updated degree status.",
+            ("Screening-confirmed zero wage amounts are included; unresolved skips and other missing amounts remain excluded."
+             if variable_metadata.get("configuration", {}).get("earnings_policy") == "receipt-confirmed" else
+             "The earnings-skip policy is inherited from the cleaning stage; inspect its metadata before interpreting the sample."),
+            "The definition and reference population of family background are inherited from stage 2; see background_definition and its source/adaptation notes.",
+            "Inference conditions on the chosen background definition and does not adjust for estimated-cutoff uncertainty, multiple pointwise contrasts, or the full survey design.",
+            "Education is degree status at the 2015 interview, not college attendance or updated degree status; the high-school reference can include people who attended college without earning a postsecondary degree.",
+            "Earlier exploratory specifications were examined before this revision; this is not a preregistered analysis.",
         ],
         "software": {"python": platform.python_version(), "numpy": np.__version__,
                      "pandas": pd.__version__, "scipy": scipy.__version__},
@@ -202,9 +316,15 @@ def main():
                     for filename in [*outputs, "cluster_covariance.csv"]},
     }
     (args.output_dir / "regression_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
-    difference = premia.iloc[2]
     print(f"Estimated weighted pooled OLS: {summary['respondents']:,} respondents, {summary['observations']:,} person-years.")
-    print(f"Difference in college premiums (lower minus other): ${difference.estimate:,.2f}; "
+    if args.education_model == "categorical":
+        bachelor = premia.loc[premia.education.eq("bachelor")]
+        print(f"BA-only versus high-school premium: other backgrounds ${bachelor.iloc[0].estimate:,.2f}; "
+              f"lower background ${bachelor.iloc[1].estimate:,.2f}.")
+        difference = bachelor.iloc[2]
+    else:
+        difference = premia.iloc[2]
+    print(f"Difference in {'BA-only versus high-school' if args.education_model == 'categorical' else 'college'} premiums (lower minus other): ${difference.estimate:,.2f}; "
           f"clustered SE ${difference.cluster_se:,.2f}; p={difference.p_value:.6f}.")
     print(f"Numeric results saved to {args.output_dir.resolve()}")
     print("Exploratory associations; no charts or formatted regression tables generated.")

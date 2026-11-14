@@ -1,0 +1,125 @@
+{
+  "status": "passed",
+  "expected_ids_independently_reconstructed_from_raw": true,
+  "raw_earnings_and_screen_confirmed_zeros_match": true,
+  "baseline_respondents": 2849,
+  "expanded_respondents": 3171,
+  "expanded_person_years": 9513,
+  "added_respondents": 322,
+  "all_added_and_only_added_people_have_missing_net_worth": true,
+  "official_weights_exact_id_match_and_package_hash_verified": true,
+  "independent_income_cutoff_nominal_1996": 21613.0,
+  "independent_regression": "Ten education/background cell intercepts plus ASVAB, female, age, race, year; WLS via weighted least squares; respondent clustered CR1; Student-t G-1 inference",
+  "all_twelve_contrasts_match": true,
+  "independent_contrasts": [
+    {
+      "education": "no_diploma_or_ged",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate": -9418.02047892172,
+      "cluster_se": 2819.158518078633,
+      "p_value": 0.00084528870740414,
+      "ci_low": -14945.580151942217,
+      "ci_high": -3890.4608059012244
+    },
+    {
+      "education": "no_diploma_or_ged",
+      "contrast": "Lower background (L=1)",
+      "estimate": -10939.077628743358,
+      "cluster_se": 3975.89217900199,
+      "p_value": 0.005968727409449245,
+      "ci_low": -18734.659584137327,
+      "ci_high": -3143.495673349391
+    },
+    {
+      "education": "no_diploma_or_ged",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate": -1521.0571498216377,
+      "cluster_se": 4818.143287507687,
+      "p_value": 0.7522558432268186,
+      "ci_low": -10968.051479538519,
+      "ci_high": 7925.937179895243
+    },
+    {
+      "education": "associate",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate": 15473.25742286392,
+      "cluster_se": 5066.35154065559,
+      "p_value": 0.002275959281438043,
+      "ci_low": 5539.598039794073,
+      "ci_high": 25406.916805933768
+    },
+    {
+      "education": "associate",
+      "contrast": "Lower background (L=1)",
+      "estimate": 7047.667074612564,
+      "cluster_se": 5383.548594239453,
+      "p_value": 0.19059136169422133,
+      "ci_low": -3507.9245731906794,
+      "ci_high": 17603.258722415805
+    },
+    {
+      "education": "associate",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate": -8425.590348251353,
+      "cluster_se": 7369.401709252236,
+      "p_value": 0.25299175126688767,
+      "ci_low": -22874.869252267486,
+      "ci_high": 6023.68855576478
+    },
+    {
+      "education": "bachelor",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate": 32308.873772930463,
+      "cluster_se": 3507.0421291210623,
+      "p_value": 5.637432893017976e-20,
+      "ci_low": 25432.572025370195,
+      "ci_high": 39185.17552049073
+    },
+    {
+      "education": "bachelor",
+      "contrast": "Lower background (L=1)",
+      "estimate": 14000.571248026023,
+      "cluster_se": 5788.2753297378185,
+      "p_value": 0.015628581104093636,
+      "ci_low": 2651.426783881434,
+      "ci_high": 25349.71571217061
+    },
+    {
+      "education": "bachelor",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate": -18308.30252490444,
+      "cluster_se": 6618.1254228844045,
+      "p_value": 0.005700966492298794,
+      "ci_low": -31284.544536105597,
+      "ci_high": -5332.0605137032835
+    },
+    {
+      "education": "graduate",
+      "contrast": "Other backgrounds (L=0)",
+      "estimate": 59237.11038549871,
+      "cluster_se": 5511.520636005125,
+      "p_value": 1.7249288187868688e-26,
+      "ci_low": 48430.60234090479,
+      "ci_high": 70043.61843009263
+    },
+    {
+      "education": "graduate",
+      "contrast": "Lower background (L=1)",
+      "estimate": 75539.9158111813,
+      "cluster_se": 18642.338164906996,
+      "p_value": 5.1986682643314536e-05,
+      "ci_low": 38987.64817871729,
+      "ci_high": 112092.1834436453
+    },
+    {
+      "education": "graduate",
+      "contrast": "Difference (L=1 minus L=0)",
+      "estimate": 16302.805425682585,
+      "cluster_se": 19355.09608788504,
+      "p_value": 0.39968336186609654,
+      "ci_low": -21646.975658548734,
+      "ci_high": 54252.586509913905
+    }
+  ],
+  "baseline_artifacts_unchanged": 22
+}

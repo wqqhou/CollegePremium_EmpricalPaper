@@ -1,0 +1,85 @@
+{
+  "stage": "01_clean_panel",
+  "inputs": {
+    "raw_data": {
+      "path": "/Users/matt/Desktop/E4331_ER/data/raw/nlsy97.csv",
+      "sha256": "cb9887d32180665742c16a9064e0e5d9c1530ed369b463e4b89f8e514838b32c"
+    },
+    "weights": {
+      "path": "/Users/matt/Desktop/E4331_ER/data/raw/custom_weights.dat",
+      "sha256": "ab8d6f82ef284a0e37c9ed5ad4e28b4de2f4ecec120aa2a8a34225b2fd400057"
+    }
+  },
+  "script_sha256": "b848d03ac8f082cf0f3b98cb1f08d70558b02d4e6cdac06129069276a8b4914d",
+  "earnings_policy": "receipt-confirmed",
+  "weights_pending": false,
+  "missing_codes": {
+    "-1": "Refusal",
+    "-2": "Do not know",
+    "-3": "Invalid skip",
+    "-4": "Valid skip",
+    "-5": "Non-interview"
+  },
+  "selection": "All required background measures/covariates and all three resolved wage amounts observed; exact positive custom-weight ID match when weights are attached.",
+  "valid_skip_policy": "Preserve reported nonnegative wage amounts. Recover an amount coded -4 as zero only when YINC-1400=0, or when YINC-1400 is -1/-2 and YINC-1600=0. Other missing amounts and unresolved screens remain missing. This recovers wage-and-salary zeros, not necessarily zero total income or nonemployment.",
+  "reported_zero_earnings_retained": true,
+  "other_negative_background_amounts_retained": true,
+  "earnings_mapping": {
+    "2016": {
+      "source": "U2857200",
+      "survey_year": 2017
+    },
+    "2018": {
+      "source": "U4282300",
+      "survey_year": 2019
+    },
+    "2020": {
+      "source": "U5753500",
+      "survey_year": 2021
+    }
+  },
+  "receipt_mapping": {
+    "2016": {
+      "initial": "U2857000",
+      "fallback": "U2857100"
+    },
+    "2018": {
+      "initial": "U4282100",
+      "fallback": "U4282200"
+    },
+    "2020": {
+      "initial": "U5753300",
+      "fallback": "U5753400"
+    }
+  },
+  "counts": {
+    "raw_respondents": 8984,
+    "background_observed": 5833,
+    "covariate_complete": 3915,
+    "selected_respondents": 2849,
+    "person_years": 8547,
+    "covariate_complete_with_earnings_valid_skip": 987,
+    "recovered_zero_amounts_all": 3537,
+    "recovered_zero_amounts_selected": 1402,
+    "selected_people_with_recovered_zero": 726,
+    "ignored_zero_weights_outside_sample": 0
+  },
+  "output": {
+    "path": "/Users/matt/Desktop/E4331_ER/data/processed/clean_panel.csv",
+    "sha256": "87f7d43ff2e26b033a563f39522d4eaf4bc87edeebe8594c25a767749c1e9904",
+    "columns": [
+      "id",
+      "birth_year",
+      "sex",
+      "race_ethnicity",
+      "asvab_stored",
+      "highest_degree_2015",
+      "household_income_1996_nominal",
+      "household_net_worth_1997_nominal",
+      "custom_weight_raw",
+      "year",
+      "survey_year",
+      "wage_nominal"
+    ]
+  }
+}
